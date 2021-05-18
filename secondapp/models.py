@@ -19,6 +19,7 @@ class Pizza(models.Model):
     name = models.CharField(max_length=30, verbose_name='Название пиццы')
     short_description = models.CharField(max_length=30, verbose_name='Краткое описание')
     price = models.IntegerField(default=0, verbose_name='Цена')
+    photo = models.ImageField('Фото', upload_to='secondapp/photos', default='', blank=True)
 
     class Meta:
         verbose_name = 'Пицца'
@@ -27,3 +28,10 @@ class Pizza(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Order(models.Model):
+    pizza = models.ForeignKey(Pizza, verbose_name='Пицца' , on_delete = models.CASCADE)
+    name = models.CharField(max_length=30, verbose_name='Имя')
+    phone = models.CharField(max_length=30, verbose_name='Телефон')
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
